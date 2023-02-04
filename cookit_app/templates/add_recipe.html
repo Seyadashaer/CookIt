@@ -1,0 +1,272 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="">
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title> Cookit | All recipes </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+    <!-- Normalize Css -->
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <!-- Main Css -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <!-- Bootstrap Css -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}">
+    <!-- Flaticon CSS -->
+    <link rel="stylesheet" href="{% static 'fonts/flaticon.css' %}">
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Modernizr Js -->
+    <script src="{% static 'js/modernizr-3.6.0.min.js' %}"></script>
+    
+</head>
+<body>
+    {% include "0_header.html" %}
+        <!-- Inne Page Banner Area Start Here -->
+        <section class="inner-page-banner bg-common" data-bg-image="img/figure/inner-page-banner1.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="breadcrumbs-area">
+                            <h1>Add a Recipe</h1>
+                            <ul>
+                                <li>
+                                    <a href="/">Home</a>
+                                </li>
+                                <li>Recipe Post</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+                                    <!-- Submit Recipe Area Start Here -->
+                                    <div style="text-align: center;">
+                                        {% if messages %}
+                                        <ul class="messages">    
+                                        {% for message in messages %}    
+                                            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                                        {% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </div>
+        <section class="submit-recipe-page-wrap padding-top-74 padding-bottom-50">
+            <div class="container">
+                <div class="row gutters-60">
+                    <div class="col-lg-8">
+                        <form enctype="multipart/form-data" class="submit-recipe-form" method="post" action="/add_recipe">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>Recipe Name</label>
+                                <input type="text" placeholder="Recipe Name" class="form-control" name="name" required>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>Choose Category</label>
+                                <select name="category" id="">
+                                {% for category in categories %}
+                                <option value="{{category}}">{{category}}</option>
+                                {% endfor %}
+                            </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea placeholder="Type your text" class="textarea form-control" name="description" id="form-message"
+                                    rows="7" cols="20"  required></textarea>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="additional-input-wrap">
+                                <label>Upload your photo</label>
+                                <div class="form-group">
+                                    <ul class="upload-img">
+                                        <input type="file" name="image" required>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="additional-input-wrap">
+                                
+                                <label>Additional Informations:</label>
+                                <div class="row gutters-5">
+                                    <div class="col-lg-6">
+                                        <div class="form-group additional-input-box icon-left">
+                                            <i class="far fa-clock"></i>
+                                            <input type="text" placeholder="Preparation Time: 00 Min" class="form-control" name="preparation_time" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group additional-input-box icon-left">
+                                            <i class="fas fa-utensils"></i>
+                                            <input type="text" placeholder="Cooking Time: 00 Min" class="form-control" name="cooking_time" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group additional-input-box icon-left">
+                                            <i class="fas fa-users"></i>
+                                            <input type="text" placeholder="Serving People: 00" class="form-control" name="serving_people" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="additional-input-wrap">
+                                <label>Ingredients:</label>
+                                <div id="new_ingredient">
+                                    <div id="g no-gutters_0" class="row no-gutters">
+                                        <div class="col-6">
+                                            <div class="form-group additional-input-box icon-left">
+                                                <i class="fas fa-arrows-alt"></i>
+                                                <input type="text" placeholder="Ingredient Name" class="form-control" name="ingredient_name_0" required>     
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group additional-input-box icon-right">
+                                                <input type="text" placeholder="Amount" class="form-control" name="ingredient_quantity_0">
+                                                <i class="fas fa-times" onclick="removeElement(0,0)"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div id="newinput" ></div>
+                                <input type="hidden" id="number_of_ingredients" name="number_of_ingredients" value="">
+                                <button  type="button" class="btn-upload" id="rowAdder"><i class="flaticon-add-plus-button"></i>ADD NEW INGREDIENT</button>
+                            </div>
+                            <div class="additional-input-wrap">
+                                <label>Instructions:</label>
+                                <div id="new_instruction" >
+                                    <div id="i no-gutters_0" class="row no-gutters" >
+                                        <div class="col-6">
+                                            <div class="form-group additional-input-box icon-left">
+                                                <i class="fas fa-arrows-alt"></i>
+                                                <input type="text" placeholder="Instruction" class="form-control" name="instruction_specification_0" required> 
+                                            </div>
+                                        </div>
+                                        <div class="col-6" >
+                                            <div class="form-group additional-input-box icon-right" style="width:fit-content">
+                                                <i class="fas fa-times" onclick="removeElement(1,0)"></i> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                <div id="newinstruction" ></div>
+                                <input type="hidden" id="number_of_instructions" name="number_of_instructions" value="">
+                                <button type="button" class="btn-upload" id="instructionAdder"><i class="flaticon-add-plus-button"></i>ADD NEW
+                                    Instruction</button>
+                            </div>
+                            
+                        
+                            <input type="submit" class="btn-submit" value="SUBMIT RECIPE">
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+        <!-- Submit Recipe Area End Here -->
+
+    </div>
+    <!-- Search Box Start Here -->
+    <div id="search" class="search-wrap">
+        <button type="button" class="close">×</button>
+        <form class="search-form">
+            <input type="search" value="" placeholder="Type here........" />
+            <button type="submit" class="search-btn"><i class="flaticon-search"></i></button>
+        </form>
+    </div>
+    <!-- Search Box End Here -->
+
+        <!-- Jquery Js -->
+        <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+        <!-- Bootstrap Js -->
+        <script src="{% static 'js/popper.min.js' %}"></script>
+        <!-- Bootstrap Js -->
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <!-- Plugins Js -->
+        <script src="{% static 'js/plugins.js' %}"></script>
+        <!-- Owl Carousel Js -->
+        <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+        <!-- Smoothscroll Js -->
+        <script src="{% static 'js/smoothscroll.min.js' %}"></script>
+        <!-- Custom Js -->
+        <script src="{% static 'js/main.js' %}"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+        </script>
+        <script type="text/javascript">
+            var number_of_ingredients=0;
+            $("#rowAdder").click(function () {
+            number_of_ingredients=number_of_ingredients+1;
+            newRowAdd =
+            '<div id="g no-gutters_'+number_of_ingredients+'" class="row no-gutters">'+
+            '<div class="col-6">'+
+            '<div class="form-group additional-input-box icon-left">'+
+            '<i class="fas fa-arrows-alt"></i>'+
+            '<input type="text" placeholder="Ingredient Name" class="form-control" name="ingredient_name_'+number_of_ingredients+'">'+
+            '</div>'+
+            ' </div>'+
+            '<div class="col-6">'+
+            '<div class="form-group additional-input-box icon-right">'+
+            '<input type="text" placeholder="Amount" class="form-control" name="ingredient_quantity_'+number_of_ingredients+'">'+
+            '<i class="fas fa-times" onclick="removeElement(0,'+number_of_ingredients+')"></i>'+
+            '</div>'+
+            '</div>'+
+            '</div>';
+            $('#newinput').append(newRowAdd);
+            input=document.getElementById("number_of_ingredients");
+            input.value= number_of_ingredients+1;
+        });
+        var number_of_instructions=0;
+        $("#instructionAdder").click(function () {
+            number_of_instructions=number_of_instructions+1;
+            newRowAdd =
+            '<div id="i no-gutters_'+number_of_instructions+'" class="row no-gutters">'+
+            '<div class="col-6">'+
+            '<div class="form-group additional-input-box icon-left" >'+
+            '<i class="fas fa-arrows-alt"></i>'+
+            '<input type="text" placeholder="Instruction" class="form-control" name="instruction_specification_'+number_of_instructions+'">'+
+            ' </div>'+
+            '</div>'+
+            '<div class="col-6" >'+
+            '<div class="form-group additional-input-box icon-right" style="width:fit-content">'+
+            '<i class="fas fa-times" onclick="removeElement(1,'+number_of_instructions+')"></i>'+
+            '</div>'+
+            '</div>'+
+            '</div>';
+            
+            $('#newinstruction').append(newRowAdd);
+            input=document.getElementById("number_of_instructions");
+            input.value= number_of_instructions+1;
+        })
+        function removeElement(x,y){
+            if (x==0){
+            div =document.getElementById('g no-gutters_'+y);
+            div.remove();
+            number_of_ingredients=number_of_ingredients-1;
+            input=document.getElementById("number_of_ingredients");
+            input.value= number_of_ingredients+1;
+            }
+            else{
+            div =document.getElementById('i no-gutters_'+y);
+            div.remove();
+            number_of_instructions=number_of_instructions-1;
+            input=document.getElementById("number_of_instructions");
+            input.value= number_of_instructions+1;
+            }
+            
+        }
+        </script>
+</body>
+
+
+</html>

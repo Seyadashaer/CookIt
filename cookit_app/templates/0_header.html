@@ -1,0 +1,123 @@
+{% load static %}
+<!-- Preloader Start Here -->
+<div id="preloader"></div>
+<!-- Preloader End Here -->
+<!-- ScrollUp Start Here -->
+<a href="/" data-type="section-switch" class="scrollup">
+    <i class="fas fa-angle-double-up"></i>
+</a>
+<!-- ScrollUp End Here -->
+<div id="wrapper" class="wrapper">
+    <!-- Header Area Start Here -->
+    <header class="header-one">
+        <div id="header-main-menu" class="header-main-menu header-sticky">
+            <div class="container">                    
+                <div class="row">
+                    <div class="col-lg-8 col-md-3 col-sm-4 col-4 possition-static">
+                        <div class="site-logo-mobile">
+                            <a href="/" class="sticky-logo-light"><img src="{% static 'img/favicon2.png' %}" alt="Site Logo"></a>
+                            <a href="/" class="sticky-logo-dark"><img src="{% static 'img/favicon2.png' %}" alt="Site Logo"></a>
+                        </div>
+                        <nav class="site-nav">
+                            <ul id="site-menu" class="site-menu">
+                                <li><a href="/">Home</a></li>
+                                <li><a href="/all_recipes">All Recipes</a></li>
+                                {% if request.session.id %}
+                                <li><a href="/my_recipes">My Recipes</a></li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="col-lg-4 col-md-9 col-sm-8 col-8 d-flex align-items-center justify-content-end">
+                        <div class="nav-action-elements-layout1">
+                            <ul>
+                                <li>
+                                    <div class="cart-wrap cart-on-mobile d-lg-none">                                            
+                                        
+                                        
+                                    </div>
+                                </li>
+                                {% if request.session.id %}
+                                <li>
+                                <a href="/logout">
+                                    <button type="button" class="login-btn" data-toggle="modal" data-target="#myModal">
+                                        <i class="flaticon-profile"></i>Logout
+                                    </button>
+                                </a>
+                                </li>
+                                {% else%}
+                                <li>
+                                    <a href="/login_page">
+                                        <button type="button" class="login-btn" data-toggle="modal" data-target="#myModal">
+                                            <i class="flaticon-profile"></i>Login
+                                        </button>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/register_page">
+                                        <button type="button" class="login-btn" data-toggle="modal" data-target="#myModal">
+                                            <i class="flaticon-profile"></i>Register
+                                        </button>
+                                    </a>
+                                </li>
+                                {% endif %}
+                                <li>
+                                    <a href="/add_recipe_page" class="fill-btn"><i class="flaticon-plus-1"></i>Add
+                                        RECIPE</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mob-menu-open toggle-menu">
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-bottom d-none d-lg-block">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 d-none d-lg-block">
+                        <div class="nav-action-elements-layout2">
+                            
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 d-none d-lg-block">
+                        <div class="site-logo-desktop">
+                            <a href="/" class="main-logo"><img src="{% static 'img/favicon2.png' %}" alt="Site Logo"></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="nav-action-elements-layout3">
+
+                          
+
+
+                            <ul>
+                                <li>
+                                    <form method="get" action="/search">
+                                        <input type="text" name="q" placeholder="Search for a recipe...">
+                                        <button type="submit" style="border: none; height: 30px;"><i class="fa fa-search"></i></button>
+                                    </form>
+                                </li>
+                                <li>
+                                    <div class="cart-wrap d-none d-lg-block">                                            
+                                        <div class="cart-info">
+                                
+                                        </div>                                   
+                                
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header Area End Here -->
+
